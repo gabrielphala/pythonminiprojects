@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <title>Detect number</title>
+    </head>
+    <body>
+       <div class="container">
+            <div class="container__title">
+                <h1>detectnumber.</h1>
+                <p>powered by, tensorflow</p>
+            </div>
+            <div class="container__main">
+                <form method="POST" action="/detectnumber" enctype="multipart/form-data">
+                    <input type="file" name="imageFile">
+                    <button type="submit">Detect</button>
+                </form>
+
+                {% if highest == 0 or highest %}
+                    <h4 style="margin: 3rem 0;">Your number is: <span>{{ highest }}</span></h4>
+                    <img src="/static/uploads/{{image_path}}">
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html> 

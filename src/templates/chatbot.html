@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Chatx</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container__title">
+            <h1>Chatx.</h1>
+            <p>powered by, nltk</p>
+        </div>
+        <div class="container__main">
+            <div class="container__main__messages">
+                <div id="messages">
+                </div>
+
+                <div class="container__main__new-message">
+                    <textarea placeholder="Type a message..." id="message-to-send"></textarea>
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    const _fetch = async (uri, { method = 'POST', headers = { 'Content-Type': 'application/json;charset=utf-8' }, body } = {}) => {
+        const response = await fetch(uri, { method, headers, body: JSON.stringify(body) });
+
+        return await response.text();
+    };
+
+    makeMessage = (message, type = 'bot') => {
+        let el = document.createElement('p')
+
+        el.className = `container__main__messages__${type}`;
+
+        el.innerHTML = `<span>${message}</span>`;
+
+        return el;
+    }
+
+    sendMessage = async () => {
+        const response = await _fetch('/chatbot/message', {
+            body: {
+                text: document.getElementById('message-to-send').value,
+            }
+        })
+
+
+        document.getElementById('messages').append(makeMessage(document.getElementById('message-to-send').value, 'user'))
+        document.getElementById('messages').append(makeMessage(response))
+
+        document.getElementById('message-to-send').value = '';
+    }
+</script>

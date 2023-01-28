@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>findmyface</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container__title">
+            <h1>findmyface.</h1>
+            <p>powered by, OpenCV</p>
+        </div>
+        <div class="container__main">
+            <form method="POST" action="/facefinder" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <button type="submit">Find face</button>
+            </form>
+
+            {% if filename %}
+
+                <canvas id="canvas"></canvas>
+
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    {% if filename %}
+        let c = document.getElementById("canvas");
+
+        let ctx = c.getContext("2d");
+
+        let img = new Image();
+
+        img.src = '/static/uploads/{{filename}}';
+
+        let faces = JSON.parse("{{faces}}")
+
+        setTimeout(() => {
+            c.width = img.naturalWidth;
+            c.height = img.naturalHeight;
+
+            ctx.drawImage(img, 0, 0, 400, 400);
+
+            faces.forEach(([x, y, w, h]) => {
+                ctx.beginPath()
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = 'red'
+                ctx.rect(x, y, w, h)
+                ctx.stroke()
+            })
+            
+        }, 500);
+    {% endif %}
+</script>

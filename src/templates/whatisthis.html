@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>whatisthis</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container__title">
+            <h1>whatisthis.</h1>
+            <p>powered by, Pytorch</p>
+        </div>
+        <div class="container__main">
+            <form method="POST" action="/whatisthis" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <button type="submit">Guess thing</button>
+            </form>
+
+            {% if data and data.filename %}
+                <h4 style="margin: 3rem 0;">Detected: {{data.item}} - {{data.accuracy}}</h4>
+                <img src="/static/uploads/{{data.filename}}">
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
