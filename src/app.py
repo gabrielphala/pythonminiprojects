@@ -1,4 +1,5 @@
 from flask import Flask
+from waitress import serve
 
 from routes.home import homeRoute
 from routes.facefinder import faceFinderRoute
@@ -9,16 +10,21 @@ from routes.detectnumber import detectNumberRoute
 #from routes.animals import animalsRoute
 from routes.twittersentimental import twitterSentimentalRoute
 
-app = Flask(__name__)
 
-homeRoute(app)
-faceFinderRoute(app)
-translatorRoute(app)
-chatBotRoute(app)
-whatIsThisRoute(app)
-detectNumberRoute(app)
-#animalsRoute(app)
-twitterSentimentalRoute(app)
 
-if  (__name__ == '__main__'):
-    app.run(port=80, debug=True)
+def create_app ():
+    app = Flask(__name__)
+
+    homeRoute(app)
+    faceFinderRoute(app)
+    translatorRoute(app)
+    chatBotRoute(app)
+    whatIsThisRoute(app)
+    detectNumberRoute(app)
+    #animalsRoute(app)
+    twitterSentimentalRoute(app)
+
+    return app;
+
+# if  (__name__ == '__main__'):
+#     serve(app, host='0.0.0.0', port=80)
