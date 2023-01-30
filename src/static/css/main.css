@@ -61,6 +61,12 @@ h1, h2, h3, h4, h5{
     display: none;
 }
 
+.image--back{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .container{
     width: 50%;
     margin: 0 auto;
@@ -96,6 +102,22 @@ h1, h2, h3, h4, h5{
 .container button{
     padding: .7rem 1.4rem;
     border: none;
+}
+
+.container .container__title h4{
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.container .container__title img{
+    width: 2rem;
+    margin-right: 1rem;
+}
+
+.container .container__title a{
+    color: #737373;
+    text-decoration: none;
 }
 
 .container__translation{
@@ -189,3 +211,133 @@ h1, h2, h3, h4, h5{
     border-radius: 6px;
 }
 
+.container--home header{
+    position: fixed;
+    z-index: 100;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 5rem;
+}
+
+.container--home header h4{
+    font-size: 2rem;
+    color: #dee3ff;
+    letter-spacing: 4px;
+}
+
+.container--home .showcase{
+    position: relative;
+    height: 40rem;
+}
+
+.container--home .showcase .showcase__background{
+    position: relative;
+    height: 40rem;
+}
+
+.container--home .showcase .showcase__caption{
+    position: absolute;
+    bottom: 1rem;
+    left: 5rem;
+    color: #1b2141;
+}
+
+.container--home .showcase .showcase__caption h1{
+    display: flex;
+    flex-direction: column;
+    font-size: 4rem;
+}
+
+.container--home .showcase .showcase__caption h1 .highlight{
+    color: #dee3ff;
+}
+
+.container--home .container--home__main{
+    display: flex;
+    padding: 5rem;
+}
+
+.container--home .container--home__main h4{
+    font-size: 2rem;
+    margin-bottom: 1.4rem;
+    color: #1b2141;
+}
+
+.container--home .container--home__main .container--home__main__projects{
+    flex: 1;
+    margin-right: 4rem;
+    padding-right: 4rem;
+    border-right: 1px solid #eee;
+}
+
+.container--home .container--home__main .container--home__main__projects .container--home__main__projects__list{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.container--home .container--home__main .container--home__main__projects .container--home__main__projects__list__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding: 1rem;
+    box-shadow: 0 0 3px #d1d1d1;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.container--home .container--home__main .container--home__main__projects .container--home__main__projects__list__item img{
+    width: 10rem;
+}
+
+.container--home .container--home__main .container--home__main__projects .container--home__main__projects__list__item h4{
+    margin-top: 3rem;
+    margin-bottom: 0;
+}
+
+.container--home .container--home__main .container--home__main__projects .container--home__main__projects__list__item p{
+    color: #b1afaf;
+}
+
+.container--home .container--home__main .container--home__main__contributers{
+    flex: 0 0 40rem;
+}
+
+.container--home .container--home__main .container--home__main__contributers .container--home__main__contributers__list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container--home .container--home__main .container--home__main__contributers .container--home__main__contributers__list__item{
+    display: flex;
+    align-items: center;
+    width: 40rem;
+}
+
+.container--home .container--home__main .container--home__main__contributers .container--home__main__contributers__list__item__icon{
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    border: 1px solid #eee;
+    margin-right: 1rem;
+    border-radius: 50%;
+}
+
+.container--home .container--home__main .container--home__main__contributers .container--home__main__contributers__list__item img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 3rem;
+    margin-right: 2rem;
+}
+
+.container--home .container--home__main .container--home__main__contributers .container--home__main__contributers__list__hr{
+    width: 8rem;
+    height: 1px;
+    background-color: #e5e4e4;
+    margin: 1rem 0;
+}
