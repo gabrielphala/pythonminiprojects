@@ -1,5 +1,4 @@
 from flask import Flask
-from waitress import serve
 
 from routes.home import homeRoute
 from routes.facefinder import faceFinderRoute
@@ -9,8 +8,6 @@ from routes.whatisthis import whatIsThisRoute
 from routes.detectnumber import detectNumberRoute
 #from routes.animals import animalsRoute
 from routes.twittersentimental import twitterSentimentalRoute
-
-
 
 def create_app ():
     app = Flask(__name__)
@@ -25,6 +22,3 @@ def create_app ():
     twitterSentimentalRoute(app)
 
     return app;
-
-# if  (__name__ == '__main__'):
-#     serve(app, host='0.0.0.0', port=80)
