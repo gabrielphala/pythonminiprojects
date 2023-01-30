@@ -8,15 +8,101 @@
     <title>Python mini projects</title>
 </head>
 <body>
-    <div class="container">
-        <div class="container__title">
-            <h1>Python mini projects.</h1>
-            <p>a series of python mini projects</p>
-        </div>
-        <div class="container__main">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis in culpa cupiditate repellat, deleniti distinctio suscipit repellendus tenetur eveniet quisquam ullam quos sapiente pariatur iusto error beatae perspiciatis nisi dolores!
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam sint, et asperiores doloremque modi vero obcaecati commodi laborum ex quia soluta aut illum, quod ut cupiditate ullam similique, accusamus libero!
+    <div class="container--home">
+        <header class="home">
+            <h4>AI MINI PROJECTS.</h4>
+        </header>
+        <section class="showcase">
+            <div class="showcase__background image--back" style="background-image: url('/static/backgrounds/code-1.jpg')"></div>
+            <div class="showcase__caption">
+                <h1><span>Python</span> <span>mini</span> <span class="highlight">AI</span> <span>projects.</span></h1>
+            </div>
+        </section>
+        <div class="container--home__main">
+            <div class="container--home__main__projects">
+                <h4>Projects</h4>
+
+                <div class="container--home__main__projects__list">
+                    <div class="container--home__main__projects__list__item" onclick="link('/detectnumber')">
+                        <img src="/static/backgrounds/dark_unknown.svg">
+
+                        <h4>detectnumber</h4>
+                        <p>Number detector</p>
+                    </div>
+                    <div class="container--home__main__projects__list__item" onclick="link('/translator')">
+                        <img src="/static/backgrounds/dark_language.svg">
+
+                        <h4>translator</h4>
+                        <p>Translator</p>
+                    </div>
+                    <div class="container--home__main__projects__list__item" onclick="link('/twitter')">
+                        <img src="/static/backgrounds/dark_twitter.svg">
+
+                        <h4>twitter</h4>
+                        <p>twitter sentence checker</p>
+                    </div>
+                    <div class="container--home__main__projects__list__item" onclick="link('/chatbot')">
+                        <img src="/static/backgrounds/dark_chatbot.svg">
+
+                        <h4>chatbot</h4>
+                        <p>Chatbot</p>
+                    </div>
+                    <div class="container--home__main__projects__list__item" onclick="link('/facefinder')">
+                        <img src="/static/backgrounds/dark_face.svg">
+
+                        <h4>facefinder</h4>
+                        <p>Face detector</p>
+                    </div>
+                    <div class="container--home__main__projects__list__item" onclick="link('/whatisthis')">
+                        <img src="/static/backgrounds/dark_unknown.svg">
+
+                        <h4>whatisthis</h4>
+                        <p>A variable object detector</p>
+                    </div>
+                    <div class="container--home__main__projects__list__item">
+                        <img src="/static/backgrounds/dark_bear.svg">
+
+                        <h4>animals</h4>
+                        <p>Animal detector / disabled</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container--home__main__contributers">
+                <h4>Contributers</h4>
+                <div class="container--home__main__contributers__list">
+                    <div class="container--home__main__contributers__list__item">
+                        <div class="container--home__main__contributers__list__item__icon">
+                            <img src="/static/backgrounds/ghost.svg">
+                        </div>
+
+                        <div>
+                            <p>Gabriel M Phala</p>
+                            <p>email: phalagee7@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="container--home__main__contributers__list__hr"></div>
+                    <div class="container--home__main__contributers__list__item">
+                        <div class="container--home__main__contributers__list__item__icon">
+                            <img src="/static/backgrounds/rocket.svg">
+                        </div>
+
+                        <p>Morena M</p>
+                    </div>
+                    <div class="container--home__main__contributers__list__hr"></div>
+                    <div class="container--home__main__contributers__list__item">
+                        <div class="container--home__main__contributers__list__item__icon">
+                            <img src="/static/backgrounds/star.svg">
+                        </div>
+
+                        <p>Milcent Malatji</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+<script>
+    const link = (url) => location.href = url;
+</script>
 </body>
 </html>
