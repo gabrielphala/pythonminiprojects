@@ -1,2 +1,3 @@
 venv
+src/local.py
 src/static/uploads*
