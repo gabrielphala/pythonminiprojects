@@ -3,7 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 import cv2
 
-ALLOWED_EXTENSIONS = ('png', 'jpg', 'gif', 'webp');
+ALLOWED_EXTENSIONS = ('png', 'jpg', 'gif', 'webp', 'jpeg');
 
 def allowed_file (filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS;
