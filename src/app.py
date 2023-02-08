@@ -8,6 +8,7 @@ from routes.whatisthis import whatIsThisRoute
 from routes.detectnumber import detectNumberRoute
 #from routes.animals import animalsRoute
 from routes.twittersentimental import twitterSentimentalRoute
+from routes.voices import voicesRoute
 
 def create_app ():
     app = Flask(__name__)
@@ -20,5 +21,6 @@ def create_app ():
     detectNumberRoute(app)
     #animalsRoute(app)
     twitterSentimentalRoute(app)
+    voicesRoute(app)
 
     return app;

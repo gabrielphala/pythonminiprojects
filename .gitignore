@@ -1,3 +1,7 @@
 venv
 src/local.py
-src/static/uploads*
+src/static/uploads
+src/static/audio
+src/static/model/voices.base.en.pt
+src/__pycache__
+src/routes/__pycache__
