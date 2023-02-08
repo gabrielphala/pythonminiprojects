@@ -78,6 +78,13 @@ h1, h2, h3, h4, h5{
     flex-direction: column;
 }
 
+.container__main__upload-label{
+    background-color: #1b2141;
+    border-radius: 16px;
+    padding: 0.4rem 1rem;
+    color: white;
+}
+
 .container form {
     display: flex;
     justify-content: space-between;
@@ -141,6 +148,10 @@ h1, h2, h3, h4, h5{
     background-color: transparent;
     padding-top: 1.4rem;
     font-family: 'Poppins Light';
+}
+
+.container__translation__to p{
+    min-height: 20rem;
 }
 
 .container__translation__to p{
@@ -366,12 +377,34 @@ h1, h2, h3, h4, h5{
 }
 
 @media (max-width: 800px) {
+    .container {
+        width: 65%;
+    }
+
     .container--home .container--home__main .container--home__main__projects .container--home__main__projects__list {
         grid-template-columns: 1fr 1fr;
     }
 }
 
+@media (max-width: 650px) {
+    .container {
+        width: 75%;
+    }
+
+    .container .container__translation{
+        flex-direction: column;
+    }
+
+    .container .container__translation .container__translation__from{
+        margin-bottom: 2rem;
+    }
+}
+
 @media (max-width: 500px) {
+    .container{
+        width: 85%;
+    }
+
     .container--home header{
         padding: 0 3rem;
     }
@@ -386,6 +419,11 @@ h1, h2, h3, h4, h5{
 }
 
 @media (max-width: 375px) {
+    .container {
+        width: 100%;
+        padding: 0 1.3rem;
+    }
+
     .container--home .container--home__main {
         padding-left: 2rem;
         padding-right: 2rem;
