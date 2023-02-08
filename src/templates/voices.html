@@ -32,7 +32,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    let rec, timer_id;
+    let rec, timer_id, stream;
 
     const sendData = (data) => {
         var form = new FormData();
@@ -78,6 +78,8 @@
     }
 
     const handlerFunction = (stream) => {
+        stream = stream;
+
         rec = new MediaRecorder(stream);
 
         rec.ondataavailable = e => {
@@ -113,5 +115,8 @@
         clearInterval(timer_id);
 
         rec.stop();
+
+        rec = null;
+        stream = null;
     }
 </script>

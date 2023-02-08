@@ -127,6 +127,30 @@ h1, h2, h3, h4, h5{
     text-decoration: none;
 }
 
+.container__main__recorder{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: .8rem 1.4rem;
+    margin-top: 5rem;
+}
+
+.container__main__recorder__controls__start{
+    background-color: #052305;
+    color: #fff;
+}
+
+.container__main__recorder__controls__stop{
+    color: #fff;
+    background-color: #950000;
+}
+
+.container__main__recorder__controls__stop:disabled{
+    background-color: #a46464;
+}
+
 .container__translation{
     margin-top: 2rem;
     display: flex;
