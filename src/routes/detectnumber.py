@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 def detectNumberRoute (app):
-    allowed = ['jpg', 'png', 'webp']
+    allowed = ['jpg' , "jpeg" , 'png', 'webp', 'jfif', "tif" , "bmp"]
 
     @app.route('/detectnumber' , methods = ['GET'])
     def show():
