@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>voices</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container__title">
+            <h4><img src="/static/icons/arrow-left.svg" alt="left"> <a href="/">Go back</a></h4>
+            <h1>voices.</h1>
+            <p>powered by, whisper</p>
+            <p>Say something in english.</p>
+        </div>
+        <div class="container__main">
+            <div class="container__main__recorder">
+                <p id="timer">00:00:00</p>
+                <div class="container__main__recorder__controls">
+                    <button class="btn container__main__recorder__controls__start" onclick="start_recording()">Start recording</button>
+                    <button id="stop_recording" class="btn container__main__recorder__controls__stop" disabled>Stop recording</button>
+                </div>
+            </div>
+            <h4 style="margin-top: 3rem;">You said:</h4>
+            <p id="captured-text">Your speech will be recorded here!</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    let rec, timer_id, stream;
+
+    const sendData = (data) => {
+        var form = new FormData();
+
+        form.append('file', data, 'data.mp3');
+        form.append('title', 'data.mp3');
+        //Chrome inspector shows that the post data includes a file and a title.
+        $.ajax({
+            type: 'POST',
+            url: '/voices/record',
+            data: form,
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(data) {
+            $('#captured-text').text(data);
+        });
+    }
+
+    const start_timer = () => {
+        let es = 0, em = 0, eh = 0, fs, fm, fh;
+
+        timer_id = setInterval(() => {
+            es++;
+
+            if (es == 60) {
+                es = 0;
+                em++
+            }
+
+            if (em == 60) {
+                em = 0;
+                eh++
+            }
+
+            fs = es < 10 ? '0' + es : es;
+            fm = em < 10 ? '0' + em : em;
+            fh = eh < 10 ? '0' + eh : eh;
+
+            $('#timer').text(`${fh}:${fm}:${fs}`);
+
+        }, 1000)
+    }
+
+    const handlerFunction = (stream) => {
+        stream = stream;
+
+        rec = new MediaRecorder(stream);
+
+        rec.ondataavailable = e => {
+            audioChunks.push(e.data);
+
+            if (rec.state == "inactive") {
+                let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+                sendData(blob);
+            }
+        }
+
+        rec.start();
+    }
+
+    const start_recording = () => {
+        start_timer();
+
+        navigator
+            .mediaDevices
+            .getUserMedia({audio: true})
+            .then(stream => { handlerFunction(stream) });
+        
+        audioChunks = [];
+        
+        $('#stop_recording')[0].disabled = false;
+
+        $('#stop_recording').on('click', e => {
+            stop_recording()
+        })
+    }
+
+    const stop_recording = () => {
+        clearInterval(timer_id);
+
+        rec.stop();
+
+        rec = null;
+        stream = null;
+    }
+</script>
