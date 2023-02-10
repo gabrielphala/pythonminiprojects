@@ -88,6 +88,9 @@
             if (rec.state == "inactive") {
                 let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
                 sendData(blob);
+
+                rec = null
+                stream = null
             }
         }
 
@@ -114,9 +117,7 @@
     const stop_recording = () => {
         clearInterval(timer_id);
 
-        rec.stop();
-
-        rec = null;
-        stream = null;
+        if (rec.state != 'inactive')
+            rec.stop();
     }
 </script>
