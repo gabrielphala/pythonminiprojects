@@ -15,7 +15,7 @@ import tensorflow as tf
 import os
 
 def animalsRoute (app):
-    allowed = ['jpg', 'png', 'webp']
+    allowed = ['jpg' , "jpeg" , 'png', 'webp', 'jfif', "tif" , "bmp"]
     model = VGG16()
 
     @app.route('/animals' , methods = ['GET'])
