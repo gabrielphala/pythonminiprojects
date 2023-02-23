@@ -49,33 +49,36 @@ def whatIsThisRoute (app):
                 )
             ])
 
-            img = Image.open(filelocation)
+            try:
+                img = Image.open(filelocation)
 
-            # preprocess the uploadede image
-            img_t = preprocess(img)
+                # preprocess the uploadede image
+                img_t = preprocess(img)
 
-            batch_t = torch.unsqueeze(img_t, 0)
-            resnet.eval()
-            out = resnet(batch_t)
+                batch_t = torch.unsqueeze(img_t, 0)
+                resnet.eval()
+                out = resnet(batch_t)
 
-            # loading names of objects, into an array
-            with open(os.path.normpath(os.path.dirname(__file__) + '/../static/data/imagenet_classes.txt')) as f:
-                labels = [line.strip() for line in f.readlines()]
+                # loading names of objects, into an array
+                with open(os.path.normpath(os.path.dirname(__file__) + '/../static/data/imagenet_classes.txt')) as f:
+                    labels = [line.strip() for line in f.readlines()]
 
-            # getting the prediction
-            _, index = torch.max(out, 1)
+                # getting the prediction
+                _, index = torch.max(out, 1)
 
-            percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-            w,x = labels[index[0]], percentage[index[0]].item()
+                percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+                w,x = labels[index[0]], percentage[index[0]].item()
 
-            # print(w, filename, x)
+                # print(w, filename, x)
 
-            # render to
-            return render_template('whatisthis.html', data={
-                "filename": filename,
-                "item": w,
-                "accuracy": x
-            });
+                # render to
+                return render_template('whatisthis.html', data={
+                    "filename": filename,
+                    "item": w,
+                    "accuracy": x
+                });
+            except:
+                return redirect('/whatisthis')
         
         else:
             return redirect('/whatisthis')

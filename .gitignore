@@ -8,3 +8,4 @@ src/static/audio
 src/static/model/voices.base.en.pt
 src/__pycache__
 src/routes/__pycache__
+*.pyc

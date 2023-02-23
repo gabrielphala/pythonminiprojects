@@ -19,7 +19,7 @@
             <div class="container__main__recorder">
                 <p id="timer">00:00:00</p>
                 <div class="container__main__recorder__controls">
-                    <button class="btn container__main__recorder__controls__start" onclick="start_recording()">Start recording</button>
+                    <button id="start_recording" class="btn container__main__recorder__controls__start">Start recording</button>
                     <button id="stop_recording" class="btn container__main__recorder__controls__stop" disabled>Stop recording</button>
                 </div>
             </div>
@@ -32,7 +32,35 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    let rec, timer_id, stream;
+    const startButton = $('#start_recording')[0],
+        stopButton = $('#stop_recording')[0];
+
+    let audioChunks = [], rec, timerId;
+
+    const startTimer = () => {
+        let es = 0, em = 0, eh = 0, fs, fm, fh;
+
+        timerId = setInterval(() => {
+            es++;
+
+            if (es == 60) {
+                es = 0;
+                em++
+            }
+
+            if (em == 60) {
+                em = 0;
+                eh++
+            }
+
+            fs = es < 10 ? '0' + es : es;
+            fm = em < 10 ? '0' + em : em;
+            fh = eh < 10 ? '0' + eh : eh;
+
+            $('#timer').text(`${fh}:${fm}:${fs}`);
+
+        }, 1000)
+    }
 
     const sendData = (data) => {
         var form = new FormData();
@@ -51,6 +79,56 @@
             $('#captured-text').text(data);
         });
     }
+
+    function handlerFunction (stream) {
+        rec = new MediaRecorder(stream);
+
+        rec.ondataavailable = e => {
+            audioChunks.push(e.data);
+
+            if (rec.state == "inactive") {
+                $('#timer').text(`00:00:00`);
+
+                let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+                
+                sendData(blob);
+
+                rec = null
+                stream = null
+            }
+        }
+    }
+
+    startButton.onclick = e => {
+        console.log('Recording are started..');
+        startButton.disabled = true;
+        stopButton.disabled = false;
+
+        navigator
+            .mediaDevices
+            .getUserMedia({audio: true})
+            .then(stream => {
+                handlerFunction(stream)
+
+                rec.start();
+
+                startTimer()
+            });
+    };
+
+    stopButton.onclick = e => {
+        console.log("Recording are stopped.");
+        startButton.disabled = false;
+        stopButton.disabled = true;
+
+        clearInterval(timerId);
+
+        rec.stop();
+    };
+    /**
+    let rec, timer_id;
+
+    
 
     const start_timer = () => {
         let es = 0, em = 0, eh = 0, fs, fm, fh;
@@ -78,7 +156,6 @@
     }
 
     const handlerFunction = (stream) => {
-        stream = stream;
 
         rec = new MediaRecorder(stream);
 
@@ -86,8 +163,10 @@
             audioChunks.push(e.data);
 
             if (rec.state == "inactive") {
+                console.log(audioChunks)
+
                 let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
-                sendData(blob);
+                //sendData(blob);
 
                 rec = null
                 stream = null
@@ -107,7 +186,7 @@
         
         audioChunks = [];
         
-        $('#stop_recording')[0].disabled = false;
+        stopButton.disabled = false;
 
         $('#stop_recording').on('click', e => {
             stop_recording()
@@ -120,4 +199,6 @@
         if (rec.state != 'inactive')
             rec.stop();
     }
+
+    */
 </script>
