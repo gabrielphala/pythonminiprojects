@@ -1,0 +1,264 @@
+.container{
+    padding: 5rem 0;
+    
+    &__title {
+        padding: 1rem 5rem;
+        border-bottom: 1px solid #eee;
+
+        .breakpoint(460px, {
+            padding: 1rem 2rem;
+        });
+
+        h4{
+            margin-top: 1rem;
+            color: #0037ff;
+
+            svg{
+                margin-right: 1rem;
+                fill: #0037ff;
+            }
+        }
+    }
+
+    &__sub-title{
+        margin-bottom: 2rem;
+
+        h1{
+            font-size: 2.2rem;
+        }
+
+        a{
+            color: #6161cb;
+        }
+
+        &__hr{
+            height: 1px;
+            width: 6rem;
+            background-color: #6161cb;
+        }
+    }
+
+    &__content {
+        margin: 0 auto;
+        margin-top: 5rem;
+        width: 80rem;
+
+        .breakpoint(1000px, {
+            width: 70rem;
+        });
+
+        .breakpoint(780px, {
+            width: 50rem;
+        });
+        
+        .breakpoint(550px, {
+            width: 40rem;
+        });
+
+        .breakpoint(500px, {
+            margin: 0;
+            margin-top: 5rem;
+            width: 100%;
+            padding: 0 3rem;
+        });
+
+        &__project-details{
+            margin-right: 4rem;
+
+            .breakpoint(780px, {
+                display: none;
+            });
+
+            img{
+                width: 32rem;
+            }
+        }
+
+        &__functionality{
+            flex: 1;
+
+            .breakpoint(780px, {
+                flex: unset;
+                margin: 0 auto;
+                width: 100%;
+            });
+
+            &__image-uploader{
+                background-color: #f3f3f3;
+                
+                
+                
+                &__controls{
+                    min-height: 25rem;
+                    border: 1px dashed #d8d8d8;
+                    border-radius: 6px;
+                    flex-direction: column;
+
+                    &--hover {
+                        border-color: #8c8ceb;
+
+                        svg {
+                            fill: #8c8ceb !important;
+                        }
+
+                        p{
+                            color: #8c8ceb !important;
+                        }
+                    }
+
+                    svg{
+                        width: 3rem;
+                        height: 3rem;
+                        fill: #818181;
+                    }
+
+                    p{
+                        margin: 2rem 0;
+                        color: #818181;
+                    }
+                }
+            }
+
+            &__clear{
+                h4{
+                    margin-left: 1rem;
+                    color: #0037ff;
+                }
+
+                svg{
+                    fill: #0037ff;
+                }
+            }
+
+            &__output-image{
+                margin-top: 2rem;
+                width: 100%;
+                padding: 1rem;
+                border: 1px solid #eee;
+                border-radius: 6px;
+            }
+
+            &__translation{
+                &__from, &__to{
+                    background-color: #f7f7f7;
+                    box-shadow: 0 0 10px #ededed, 0 0 1px #000;
+                    padding: 1rem;
+                    border-radius: 6px;
+                }
+
+                &__from textarea{
+                    min-height: 10rem;
+                    background-color: transparent;
+                    border: none;
+                    box-shadow: none;
+                }
+
+                &__to{
+                    margin-top: 2rem;
+                }
+
+                .language-selector select{
+                    background-color: transparent;
+                    padding: 0.3rem;
+                    border-radius: 6px;
+                    color: #5b5b5b;
+                    border: 1px solid #b8b8b8;
+                }
+            }
+
+            &__chat{
+                &__body{
+                    position: relative;
+                    margin: 1.4rem 0;
+
+                    span{
+                        background-color: #eee;
+                        border-radius: 3rem;
+                        padding: .2rem .8rem;
+                    }
+                    
+                    &__user-message{
+                        text-align: right;
+
+                        span{
+                            background-color: #9292d8;
+                            color: #fafafa;
+                        }
+                    }
+                }
+                
+                &__footer{
+                    border-top: 1px solid #eee;
+                    
+                    input {
+                        flex: 1;
+                        width: 100%;
+                        margin-right: 1.1rem;
+                        padding: .5rem 1.4rem;
+                        border: 1px solid #eee;
+                        border-radius: 3rem;
+                    }
+                
+                    button {
+                        border-radius: 3rem;
+                    }
+                }
+            }
+        }
+    }
+
+    &__footer{
+        margin: 0 auto;
+        margin-top: 5rem;
+        width: 80rem;
+
+        .breakpoint(1000px, {
+            width: 70rem;
+        });
+
+        .breakpoint(800px, {
+            width: 60rem;
+        });
+
+        .breakpoint(650px, {
+            width: 50rem;
+        });
+
+        .breakpoint(550px, {
+            width: 40rem;
+        });
+
+        .breakpoint(500px, {
+            margin: 0;
+            margin-top: 5rem;
+            width: 100%;
+            padding: 0 3rem;
+        });
+
+        &__other-projects{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+
+            .breakpoint(760px, {
+                grid-template-columns: 1fr 1fr;
+            });
+
+            .breakpoint(450px, {
+                grid-template-columns: 1fr;
+            });
+
+            &__item{
+                flex-direction: column;
+                border: 1px solid #eee;
+                border-radius: 6px;
+                padding: 2rem 0;
+
+                img{
+                    width: 10rem;
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+    }
+}

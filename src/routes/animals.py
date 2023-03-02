@@ -4,7 +4,6 @@ from keras.applications.vgg16 import preprocess_input
 from keras.applications.vgg16 import decode_predictions
 from keras.applications.vgg16 import VGG16
 
-
 import sys
 import time
 import math

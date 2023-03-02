@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
-{% block title %} Translator {% endblock %}
+{% block title %} Image text reader {% endblock %}
 {% block body %}
     <div class="container">
         <div class="container__title">
-            <h1>Translator</h1>
-            <p>Detect objects using this tool</p>
+            <h1>Image text reader</h1>
+            <p>Read text from images using this tool</p>
             <h4>
                 <a href="/" class="flex flex--a-center">
                     <svg class="image--icon">
@@ -16,38 +16,31 @@
         </div>
         <div class="container__content flex">
             <div class="container__content__project-details">
-                <img src="/static/backgrounds/dark_language.svg" alt="">
+                <img src="/static/backgrounds/text.svg" alt="">
             </div>
             <div class="container__content__functionality">
-                <div class="container__content__functionality__translation">
-                    <div class="container__content__functionality__translation__from">
-                        <div class="language-selector flex flex--j-space-between flex--a-center">
-                            <h4>From</h4>
-                            <select id="src-lang">
-                                <option value="auto">Auto</option>
-                            </select>
-                        </div>
-                        <textarea placeholder="Enter text to translate..." id="text-to-translate"></textarea>
-                    </div>
-                    <div class="container__content__functionality__translation__to">
-                        <div class="language-selector flex flex--j-space-between flex--a-center">
-                            <h4>To</h4>
-                            <select id="dest-lang">
-                            </select>
-                        </div>
-                        <p id="translated-text"></p>
+                <div class="container__content__functionality__image-uploader">
+                    <div  id="droparea" class="container__content__functionality__image-uploader__controls flex flex--j-center flex--a-center">
+                        <svg>
+                            <use href="#add-1"></use>
+                        </svg>
+                        <p>Drag and drop an image here</p>
+                        <input type="file" id="file" hidden>
+                        <label class="btn btn--primary" for="file">Browse files</label>
                     </div>
                 </div>
 
                 <div class="flex flex--a-center" style="margin-top: 2rem;">
-                    <button class="btn btn--primary" style="margin-right: 3rem;" id="get-translation-btn">Translate</button>
+                    <button class="btn" style="margin-right: 3rem;" id="img-upload-btn">Read image text</button>
                     <div id="clear-output" class="container__content__functionality__clear flex flex--a-center">
                         <svg class="image--icon">
                             <use href="#refresh"></use>
                         </svg>
-                        <h4>Clear translation</h4>
+                        <h4>Clear text</h4>
                     </div>
                 </div>
+
+                <p id="read-image-text" class="loading-text" style="margin-top: 2rem;">Upload image to read...</p>
             </div>
         </div>
         <div class="container__footer">
@@ -62,8 +55,8 @@
             <div class="container__footer__other-projects flex flex--j-space-between">
                 <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
                     <img src="/static/backgrounds/dark_unknown.svg">
-                    <h4>Object detector</h4>
-                    <a href="/objectdetector">View</a>
+                    <h4>Number detector</h4>
+                    <a href="/numberdetector">View</a>
                 </div>
                 <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
                     <img src="/static/backgrounds/dark_twitter.svg">
@@ -71,20 +64,30 @@
                     <a disabled>Upcoming</a>
                 </div>
                 <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
-                    <img src="/static/backgrounds/dark_unknown.svg">
-                    <h4>Number detector</h4>
-                    <a href="/numberdetector">View</a>
+                    <img src="/static/backgrounds/dark_language.svg">
+                    <h4>Speech to text</h4>
+                    <a disabled>Upcoming</a>
                 </div>
             </div>
         </div>
     </div>
 
     <script type="module">
-        import { loadLanguages, getTranslation } from "/static/js/helpers/translator.js"
-    
-        loadLanguages()
+        import DragDrop from "/static/js/helpers/dragndrop.js"
+        import { uploadOnClick } from "/static/js/helpers/image-uploader.js"
 
-        document.getElementById('get-translation-btn')
-            .onclick = getTranslation
+        uploadOnClick('/textreader/read', (response) => {
+            const output = document.getElementById('read-image-text');
+
+            if (!response.successful) return output.innerText = 'Could not read try again or try a different image...'
+
+            output.innerText = response.text;
+        })
+
+        const draganddrop = DragDrop('droparea', '/textreader/read')
+
+        document.getElementById('clear-output')
+            .onclick = (e) => document.getElementById('read-image-text').innerText = 'Upload image to read...';
+
     </script>
 {% endblock %}

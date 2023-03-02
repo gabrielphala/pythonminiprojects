@@ -1,0 +1,5 @@
+{
+    "watchFolder": "src/static/less",
+    "outputFolder": "src/static/css",
+    "mainFile": "main.less"
+}

@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+{% block title %} Number detector {% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="container__title">
+            <h1>Number detector</h1>
+            <p>Read text from images using this tool</p>
+            <h4>
+                <a href="/" class="flex flex--a-center">
+                    <svg class="image--icon">
+                        <use href="#back-arrow"></use>
+                    </svg>
+                    <span>Back to home</span>
+                </a>
+            </h4>
+        </div>
+        <div class="container__content flex">
+            <div class="container__content__project-details">
+                <img src="/static/backgrounds/dark_unknown.svg" alt="">
+            </div>
+            <div class="container__content__functionality">
+                <div class="container__content__functionality__image-uploader">
+                    <div  id="droparea" class="container__content__functionality__image-uploader__controls flex flex--j-center flex--a-center">
+                        <svg>
+                            <use href="#add-1"></use>
+                        </svg>
+                        <p>Drag and drop an image here</p>
+                        <input type="file" id="file" hidden>
+                        <label class="btn btn--primary" for="file">Browse files</label>
+                    </div>
+                </div>
+
+                <div class="flex flex--a-center" style="margin-top: 2rem;">
+                    <button class="btn" style="margin-right: 3rem;" id="img-upload-btn">Read image text</button>
+                    <div id="clear-output" class="container__content__functionality__clear flex flex--a-center">
+                        <svg class="image--icon">
+                            <use href="#refresh"></use>
+                        </svg>
+                        <h4>Clear text</h4>
+                    </div>
+                </div>
+
+                <p id="detected-number" class="loading-text" style="margin-top: 2rem;">Upload image to read...</p>
+            </div>
+        </div>
+        <div class="container__footer">
+            <div class="container__sub-title flex flex--a-center flex--j-space-between">
+                <div>
+                    <h1>Other projects</h1>
+                    <div class="container__sub-title__hr"></div>
+                </div>
+                <h4><a href="/">View all</a></h4>
+            </div>
+
+            <div class="container__footer__other-projects flex flex--j-space-between">
+                <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
+                    <img src="/static/backgrounds/text.svg">
+                    <h4>Image text reader</h4>
+                    <a href="/textreader">View</a>
+                </div>
+                <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
+                    <img src="/static/backgrounds/dark_chatbot.svg">
+                    <h4>Chatbot</h4>
+                    <a href="/chatbot">View</a>
+                </div>
+                <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
+                    <img src="/static/backgrounds/dark_bear.svg">
+                    <h4>Animal detector</h4>
+                    <a disabled>Upcoming</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import DragDrop from "/static/js/helpers/dragndrop.js"
+        import { uploadOnClick } from "/static/js/helpers/image-uploader.js"
+
+        const responseHandler = (response) => {
+            if (!response.successful) return;
+
+            document.getElementById('detected-number')
+                .innerHTML = `The detected number is: <span class="bold">${response.number}</span>`
+        }
+
+        uploadOnClick('/numberdetector/detect', responseHandler)
+
+        DragDrop('droparea', '/numberdetector/detect', { id: 'detected-number' })
+            .onResponse(responseHandler)
+
+        document.getElementById('clear-output')
+            .onclick = (e) => document.getElementById('detected-number').innerText = 'Upload image to read...';
+    </script>
+{% endblock %}

@@ -1,114 +1,218 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>Python mini projects</title>
-</head>
-<body>
-    <div class="container--home">
-        <header class="home">
-            <h4>AI MINI PROJECTS.</h4>
-        </header>
-        <section class="showcase">
-            <div class="showcase__background image--back" style="background-image: url('/static/backgrounds/code-1.jpg')"></div>
-            <div class="showcase__caption">
-                <h1><span>Python</span> <span>mini</span> <span class="highlight">AI</span> <span>projects.</span></h1>
+{% extends "layout.html" %}
+{% block title %} Home {% endblock %}
+{% block body %}
+    <section class="showcase">
+        <div class="showcase__background image--back" style="background-image: url('/static/backgrounds/code-1.jpg')"></div>
+        <div class="showcase__caption pos--abs">
+            <h1 class="flex"><span>Python</span> <span>mini</span> <span class="highlight">AI</span> <span>projects.</span></h1>
+        </div>
+        <div class="showcase__recent-project card">
+            <div class="card__header">
+                <h4>Recent project</h4>
+                <p>Optical Character Recognition - Image text reader</p>
             </div>
-        </section>
-        <div class="container--home__main">
-            <div class="container--home__main__projects">
-                <h4>Projects</h4>
-
-                <div class="container--home__main__projects__list">
-                    <div class="container--home__main__projects__list__item" onclick="link('/detectnumber')">
-                        <img src="/static/backgrounds/dark_unknown.svg">
-
-                        <h4>detectnumber</h4>
-                        <p>Number detector</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item" onclick="link('/translator')">
-                        <img src="/static/backgrounds/dark_language.svg">
-
-                        <h4>translator</h4>
-                        <p>Translator</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item" onclick="link('/twitter')">
-                        <img src="/static/backgrounds/dark_twitter.svg">
-
-                        <h4>twitter</h4>
-                        <p>twitter sentence checker</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item" onclick="link('/chatbot')">
-                        <img src="/static/backgrounds/dark_chatbot.svg">
-
-                        <h4>chatbot</h4>
-                        <p>Chatbot</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item" onclick="link('/facefinder')">
-                        <img src="/static/backgrounds/dark_face.svg">
-
-                        <h4>facefinder</h4>
-                        <p>Face detector</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item" onclick="link('/whatisthis')">
-                        <img src="/static/backgrounds/dark_unknown.svg">
-
-                        <h4>whatisthis</h4>
-                        <p>A variable object detector</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item">
-                        <img src="/static/backgrounds/dark_bear.svg">
-
-                        <h4>animals</h4>
-                        <p>Animal detector / disabled</p>
-                    </div>
-                    <div class="container--home__main__projects__list__item" onclick="link('/voices')">
-                        <img src="/static/backgrounds/dark_language.svg">
-
-                        <h4>voices</h4>
-                        <p>Speech to text</p>
-                    </div>
-                </div>
+            <div class="card__body">
+                <img src="/static/backgrounds/text.svg">
             </div>
-            <div class="container--home__main__contributers">
-                <h4>Contributers</h4>
-                <div class="container--home__main__contributers__list">
-                    <div class="container--home__main__contributers__list__item">
-                        <div class="container--home__main__contributers__list__item__icon">
-                            <img src="/static/backgrounds/ghost.svg">
-                        </div>
-
-                        <p>Gabriel M Phala</p>
-                    </div>
-                    <div class="container--home__main__contributers__list__hr"></div>
-                    <div class="container--home__main__contributers__list__item">
-                        <div class="container--home__main__contributers__list__item__icon">
-                            <img src="/static/backgrounds/rocket.svg">
-                        </div>
-
-                        <div>
-                            <p>Morena R Mphuthi</p>
-                            <p>github: github.com/more-mr</p>
-                        </div>
-                    </div>
-                    <div class="container--home__main__contributers__list__hr"></div>
-                    <div class="container--home__main__contributers__list__item">
-                        <div class="container--home__main__contributers__list__item__icon">
-                            <img src="/static/backgrounds/star.svg">
-                        </div>
-
-                        <p>Milcent Malatji</p>
-                    </div>
-                </div>
+            <div class="card__footer">
+                <a class="btn btn--primary" href="/textreader">View project</a>
             </div>
         </div>
-    </div>
+    </section>
+    <section class="home-content">
+        <div class="home-content__title">
+            <h1>Projects</h1>
+            <div class="home-content__title__hr"></div>
+        </div>
+        <div class="home-content__main flex">
+            <div class="home-content__main__projects">
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/text.svg">
+                    </div>
 
-<script>
-    const link = (url) => location.href = url;
-</script>
-</body>
-</html>
+                    <div class="card__footer">
+                        <h4>Optical Character Recognition</h4>
+                        <p>Image text reader</p>
+
+                        <div class="home-content__main__projects__item__status--available flex flex--j-space-between">
+                            <a href="/textreader">View project</a>
+                            <p>available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_chatbot.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Natural Language Processing</h4>
+                        <p>Chatbot</p>
+
+                        <div class="home-content__main__projects__item__status--available flex flex--j-space-between">
+                            <a href="/chatbot">View project</a>
+                            <p>available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_language.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Natural Language Processing</h4>
+                        <p>translator</p>
+
+                        <div class="home-content__main__projects__item__status--available flex flex--j-space-between">
+                            <a href="/translator">View project</a>
+                            <p>available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_face.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Face Detection</h4>
+                        <p>Face finder</p>
+
+                        <div class="home-content__main__projects__item__status--available flex flex--j-space-between">
+                            <a href="/facedetector">View project</a>
+                            <p>available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_unknown.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Object Detection</h4>
+                        <p>Number detection</p>
+
+                        <div class="home-content__main__projects__item__status--available flex flex--j-space-between">
+                            <a href="/numberdetector">View project</a>
+                            <p>available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_bear.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Object Detection</h4>
+                        <p>Animals</p>
+
+                        <div class="home-content__main__projects__item__status--upcoming flex flex--j-space-between">
+                            <a disabled>View project</a>
+                            <p>upcoming</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_unknown.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Object Detection</h4>
+                        <p>Animals / Things</p>
+
+                        <div class="home-content__main__projects__item__status--available flex flex--j-space-between">
+                            <a href="/objectdetector">View project</a>
+                            <p>available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_language.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Natural Language Processing</h4>
+                        <p>Speech to text</p>
+
+                        <div class="home-content__main__projects__item__status--upcoming flex flex--j-space-between">
+                            <a disabled>View project</a>
+                            <p>upcoming</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content__main__projects__item flex flex--j-space-between card">
+                    <div class="card__header flex flex--j-center">
+                        <img src="/static/backgrounds/dark_twitter.svg">
+                    </div>
+
+                    <div class="card__footer">
+                        <h4>Natural Language Processing</h4>
+                        <p>Twitter Sentiment Analysis</p>
+
+                        <div class="home-content__main__projects__item__status--upcoming flex flex--j-space-between">
+                            <a disabled>View project</a>
+                            <p>upcoming</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-content__main__contributers">
+                <div class="home-content__title">
+                    <h1>Contributers</h1>
+                    <div class="home-content__title__hr"></div>
+                </div>
+
+                <ul class="home-content__main__contributers__list">
+                    <div class="home-content__main__contributers__list__item flex flex--a-center">
+                        <div class="home-content__main__contributers__list__item__icon flex flex--a-center flex--j-center">
+                            <img src="/static/backgrounds/ghost.svg">
+                        </div>
+                        <div class="home-content__main__contributers__list__item__details">
+                            <h4>Gabriel Phala <span>&lt;github.com/gabrielphala&gt;</span></h4>
+                            <p>Lead web developer</p>
+                        </div>
+                    </div>
+                    <div class="home-content__main__contributers__list__item flex flex--a-center">
+                        <div class="home-content__main__contributers__list__item__icon flex flex--a-center flex--j-center">
+                            <img src="/static/backgrounds/rocket.svg">
+                        </div>
+                        <div class="home-content__main__contributers__list__item__details">
+                            <h4>Morena R Mphuthi <span>&lt;github.com/more-mr&gt;</span></h4>
+                            <p>AI/ML Model developer</p>
+                        </div>
+                    </div>
+                    <div class="home-content__main__contributers__list__item flex flex--a-center">
+                        <div class="home-content__main__contributers__list__item__icon flex flex--a-center flex--j-center">
+                            <img src="/static/backgrounds/star.svg">
+                        </div>
+                        <div class="home-content__main__contributers__list__item__details">
+                            <h4>Milicent Malatji <span>&lt;github.com/Milcent010112&gt;</span></h4>
+                            <p>Designer</p>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <script>
+        const link = (url) => location.href = url;
+        const header = document.getElementsByClassName('main-header')[0];
+
+        window.onscroll = (e) => {
+            if (document.documentElement.scrollTop > 420) {
+                header.classList.remove('main-header--home')
+
+                return header.classList.add('main-header--shadow')
+            }
+
+            header.classList.add('main-header--home')
+            header.classList.remove('main-header--shadow')
+        }
+    </script>
+{% endblock %}

@@ -1,6 +1,8 @@
 from flask import render_template, request
 from nltk.chat.util import Chat, reflections
 
+import json
+
 def chatBotRoute (app):
     pairs = [
         [
@@ -72,11 +74,12 @@ def chatBotRoute (app):
 
     chat = Chat(pairs, reflections)
 
-    @app.route('/chatbot/message', methods = ['POST'])
-    def message ():
-        text = request.json['text']
-        return str(chat.respond(text))
-
     @app.route('/chatbot')
     def chatbot ():
         return render_template('chatbot.html')
+
+    @app.route('/chatbot/message', methods = ['POST'])
+    def message ():
+        text = request.json['text']
+
+        return json.dumps({'text': chat.respond(text), 'successful': True})

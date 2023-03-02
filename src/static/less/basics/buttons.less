@@ -1,0 +1,25 @@
+.btn{
+    padding: .7rem 1.4rem;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: #fafafa;
+    text-align: center;
+    line-height: 1;
+    font-weight: 500;
+    cursor: pointer;
+
+    &--primary{
+        background-color: #8c8ceb;
+        color: #fff;
+
+        &:disabled{
+            background-color: lighten(#8c8ceb, 15%);
+            border-color: #8c8ceb;
+        }
+    }
+
+    &--cancel{
+        background-color: #fafafa;
+        color: #333;
+    }
+}

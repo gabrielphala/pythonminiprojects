@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block title %} Face detector {% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="container__title">
+            <h1>Face detector</h1>
+            <p>Detect daces using this tool</p>
+            <h4>
+                <a href="/" class="flex flex--a-center">
+                    <svg class="image--icon">
+                        <use href="#back-arrow"></use>
+                    </svg>
+                    <span>Back to home</span>
+                </a>
+            </h4>
+        </div>
+        <div class="container__content flex">
+            <div class="container__content__project-details">
+                <img src="/static/backgrounds/dark_face.svg" alt="">
+            </div>
+            <div class="container__content__functionality">
+                <div class="container__content__functionality__image-uploader">
+                    <div  id="droparea" class="container__content__functionality__image-uploader__controls flex flex--j-center flex--a-center">
+                        <svg>
+                            <use href="#add-1"></use>
+                        </svg>
+                        <p>Drag and drop an image here</p>
+                        <input type="file" id="file" hidden>
+                        <label class="btn btn--primary" for="file">Browse files</label>
+                    </div>
+                </div>
+
+                <div class="flex flex--a-center" style="margin-top: 2rem;">
+                    <button class="btn" style="margin-right: 3rem;" id="img-upload-btn">Detect faces</button>
+                     <div id="clear-output" class="container__content__functionality__clear flex flex--a-center">
+                        <svg class="image--icon">
+                            <use href="#refresh"></use>
+                        </svg>
+                        <h4>Clear text</h4>
+                    </div>
+                </div>
+
+                <p class="loading-text" style="margin-top: 2rem;">Upload image...</p>
+                <p id="error-container" class="hide" style="margin-top: 2rem;"></p>
+            
+                <div class="flex flex--j-center" style="margin-top: 2rem;">
+                    <canvas id="canvas" style="border-radius: 6px; overflow: hidden;" width="0" height="0"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="container__footer">
+            <div class="container__sub-title flex flex--a-center flex--j-space-between">
+                <div>
+                    <h1>Other projects</h1>
+                    <div class="container__sub-title__hr"></div>
+                </div>
+                <h4><a href="/">View all</a></h4>
+            </div>
+
+            <div class="container__footer__other-projects flex flex--j-space-between">
+                <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
+                    <img src="/static/backgrounds/dark_chatbot.svg">
+                    <h4>Chatbot</h4>
+                    <a href="/chatbot">View</a>
+                </div>
+                <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
+                    <img src="/static/backgrounds/text.svg">
+                    <h4>Image text reader</h4>
+                    <a href="/textreader">View</a>
+                </div>
+                <div class="container__footer__other-projects__item flex flex--j-bottom flex--a-center">
+                    <img src="/static/backgrounds/dark_language.svg">
+                    <h4>Translator</h4>
+                    <a href="/translator">view</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import DragDrop from "/static/js/helpers/dragndrop.js"
+
+        import { uploadOnClick } from "/static/js/helpers/image-uploader.js"
+
+        const responseHandler = (response) => {
+            let c = document.getElementById("canvas");
+
+            let ctx = c.getContext("2d");
+
+            let img = new Image();
+
+            img.src = `/static/uploads/${response.filename}`;
+
+            document.getElementsByClassName('loading-text')[0].innerText = 'Done'
+
+            setTimeout(() => {
+                c.width = img.naturalWidth;
+                c.height = img.naturalHeight;
+
+                ctx.drawImage(img, 0, 0, 400, 400);
+
+                response.faces.forEach(([x, y, w, h]) => {
+                    ctx.beginPath()
+                    ctx.lineWidth = 5;
+                    ctx.strokeStyle = 'red'
+                    ctx.rect(x, y, w, h)
+                    ctx.stroke()
+                })
+                
+            }, 500);
+        }
+
+        uploadOnClick('/facedetector/detect', responseHandler)
+
+        DragDrop('droparea', '/facedetector/detect', { id: 'detected-face', loading: false, output: false })
+            .onResponse(responseHandler)
+
+        document.getElementById('clear-output')
+            .onclick = (e) => document.getElementsByClassName('loading-text')[0].innerText = 'Upload image...'
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+.main-header{
+    position: fixed;
+    width: 100%;
+    height: 5rem;
+    padding: 0 5rem;
+    z-index: 2;
+    background-color: #fdfdfd;
+
+    .breakpoint(460px, {
+        padding: 0 2rem;
+    });
+
+    &--home{
+        color: #bdbdbd;
+        background-color: transparent;
+    }
+
+    &--shadow{
+        box-shadow: 0 0 9px #dedddd;
+    }
+
+    &__logo{
+        img{
+            width: 4.5rem;
+            margin-right: 1.6rem;
+        }
+
+        h4{
+            letter-spacing: 2px;
+
+            .breakpoint(420px, {
+                display: flex;
+                flex-direction: column;
+            });
+        }
+    }
+}

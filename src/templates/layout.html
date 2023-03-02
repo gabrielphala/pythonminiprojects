@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>{% block title %}{% endblock %} | Python Mini Projects</title>
+</head>
+<body>
+    <div hidden>
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <symbol id="add-1" viewBox="0 0 24 24">
+                <path d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Zm5-10a1,1,0,0,1-1,1H13v3a1,1,0,0,1-2,0V13H8a1,1,0,0,1,0-2h3V8a1,1,0,0,1,2,0v3h3A1,1,0,0,1,17,12Z" />
+            </symbol>
+            <symbol id="cross" viewBox="0 0 24 24">
+                <path d="M23.707.293h0a1,1,0,0,0-1.414,0L12,10.586,1.707.293a1,1,0,0,0-1.414,0h0a1,1,0,0,0,0,1.414L10.586,12,.293,22.293a1,1,0,0,0,0,1.414h0a1,1,0,0,0,1.414,0L12,13.414,22.293,23.707a1,1,0,0,0,1.414,0h0a1,1,0,0,0,0-1.414L13.414,12,23.707,1.707A1,1,0,0,0,23.707.293Z" />
+            </symbol>
+            <symbol id="refresh" viewBox="0 0 24 24">
+                <path d="M23,12a.982.982,0,0,0-.988.878A9.986,9.986,0,0,1,4.924,19H7.669a1,1,0,1,0,0-2h-4a2,2,0,0,0-2,2v4a1,1,0,0,0,2,0V20.562A11.977,11.977,0,0,0,24,13.1,1.007,1.007,0,0,0,23,12Z" />
+                <path d="M21.331,0a1,1,0,0,0-1,1V3.438A11.977,11.977,0,0,0,0,10.9,1.007,1.007,0,0,0,1,12a.982.982,0,0,0,.988-.878A9.986,9.986,0,0,1,19.076,5H16.331a1,1,0,0,0,0,2h4a2,2,0,0,0,2-2V1A1,1,0,0,0,21.331,0Z" />
+            </symbol>
+            <symbol id="back-arrow" viewBox="0 0 24 24">
+                <path d="M.876,14.088l3.879,3.879a1,1,0,0,0,1.414,0h0a1,1,0,0,0,0-1.414L2.614,13,23,13a1,1,0,0,0,1-1h0a1,1,0,0,0-1-1L2.553,11,6.169,7.381a1,1,0,0,0,0-1.414h0a1,1,0,0,0-1.414,0L.875,9.846A3.007,3.007,0,0,0,.876,14.088Z"/>
+            </symbol>
+        </svg>
+    </div>
+    <header class="main-header {% if isHome %} main-header--home {% endif %} flex flex--a-center flex--j-space-between">
+        <div class="main-header__logo flex flex--a-center">
+            <img src="/static/backgrounds/code.svg" alt="logo">
+            <h4><span>PYTHON MINI</span> <span>PROJECTS</span></h4>
+        </div>
+        <div class="main-header__greeting">
+            <p id="greeting">Good afternoon</p>
+        </div>
+    </header>
+    {% block body %} {% endblock %}
+    {% block footer %} {% endblock %}
+
+    <script>
+        let date = new Date(),
+            hours = date.getHours(),
+            message = '';
+
+        if (hours < 12) message = 'Good morning'
+        else if (hours >= 12 && hours < 18) message = 'Good afternoon'
+        else message = 'Good evening'
+
+        document.getElementById('greeting')
+            .innerText = message
+    </script>
+</body>
+</html>

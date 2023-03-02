@@ -1,0 +1,196 @@
+.showcase{
+    position: relative;
+
+    &__background{
+        height: 45rem;
+        filter: brightness(.3);
+    }
+
+    &__caption{
+        left: 5rem;
+        bottom: 2rem;
+
+        .breakpoint(400px, {
+            left: 2rem;
+        });
+
+        h1{
+            font-size: 3.6rem;
+            flex-direction: column;
+            color: #bdbdbd;
+
+            .highlight{
+                color: #6161cb;
+            }
+        }
+    }
+
+    &__recent-project{
+        position: absolute;
+        right: 15rem;
+        bottom: -15rem;
+        box-shadow: 0 0 10px #686767;
+
+        .card__header{
+            p{
+                color: #8b8b8b;
+            }
+        }
+
+        .card__body{
+            margin-top: 1rem;
+
+            img{
+                width: 35rem;
+            }
+        }
+
+        .card__footer{
+            margin-top: 2rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .breakpoint(920px, {
+            right: 5rem;
+        });
+
+        .breakpoint(800px, {
+            display: none
+        })
+    }
+}
+
+.home-content{
+    padding: 5rem;
+
+    .breakpoint(400px, {
+        padding: 2rem;
+    });
+
+    &__title{
+        font-size: 1.6rem;
+
+        &__hr{
+            height: 2px;
+            width: 6rem;
+            background-color: #6161cb;
+        }
+    }
+
+    &__main{
+        .breakpoint(750px, {
+            display: block;
+        });
+
+        &__projects{
+            padding-top: 2rem;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-right: 2rem;
+
+            .breakpoint(1350px, {
+                grid-template-columns: 1fr 1fr;
+            });
+
+            .breakpoint(1100px, {
+                grid-template-columns: 1fr;
+            });
+
+            .breakpoint(750px, {
+                margin-right: 0;
+                width: 30rem;
+                margin: 2rem auto;
+            });
+
+            .breakpoint(500px, {
+                width: 100%;
+                margin: 0;
+                margin-bottom: 2rem;
+            });
+
+            &__item{
+                flex-direction: column;
+
+                img{
+                    width: 55%;
+                }
+
+                &__status{
+                    &--upcoming{
+                        a{
+                            color: #eee !important;
+                        }
+
+                        p:last-child{
+                            color: darkred;
+                        }
+                    }
+
+                    &--available{
+                        p{
+                            color: #626cd0;
+                        }
+                    }
+                }
+
+                .card__footer{
+                    .flex{
+                        margin-top: 1rem;
+
+                        a{
+                            color: #6161cb;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__contributers{
+            flex: 0 0 50rem;
+            padding-top: 9rem;
+
+            .breakpoint(970px, {
+                flex: 0 0 47rem;
+            });
+
+            .breakpoint(920px, {
+                flex: 0 0 40rem;
+            });
+
+            .breakpoint(800px, {
+                flex: 0 0 50%;
+                padding-top: 0;
+            });
+
+            &__list{
+                margin-top: 2rem;
+
+                &__item{
+                    &:not(:last-child){
+                        margin-bottom: 1.4rem;
+                    }
+
+                    &__icon{
+                        flex: 0 0 6.5rem;
+                        height: 6.5rem;
+                        border: 1px solid #eee;
+                        border-radius: 50%;
+                        margin-right: 1rem;
+
+                        img{
+                            width: 3rem;
+                        }
+                    }
+
+                    &__details{
+                        h4 span{
+                            font-family: @poppins-light;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
