@@ -85,7 +85,7 @@
 
         uploadOnClick('/numberdetector/detect', responseHandler)
 
-        DragDrop('droparea', '/numberdetector/detect', { id: 'detected-number' })
+        DragDrop('droparea', '/numberdetector/detect', { id: 'detected-number', output: false })
             .onResponse(responseHandler)
 
         document.getElementById('clear-output')
