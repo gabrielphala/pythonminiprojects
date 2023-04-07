@@ -20,15 +20,15 @@ def faceDetectorRoute (app):
 
     @app.route('/facedetector/detect', methods = ['POST'])
     def detectFace():
-        if ('file' not in request.files) or (request.files['file'] and request.files['file'].filename == ''):
-            return json.dumps({ 'error': 'Please select a file', 'successful': False })
-
-        file = request.files['file']
-
-        if (not(allowed_file(file.filename))):
-            return json.dumps({ 'error': 'File type not allowed', 'successful': False })
-
         try:
+            if ('file' not in request.files) or (request.files['file'] and request.files['file'].filename == ''):
+                return json.dumps({ 'error': 'Please select a file', 'successful': False })
+
+            file = request.files['file']
+
+            if (not(allowed_file(file.filename))):
+                return json.dumps({ 'error': 'File type not allowed', 'successful': False })
+
             filename = secure_filename(file.filename)
             filelocation = os.path.normpath(os.path.dirname(__file__) + '/../static/uploads/' + filename)
             file.save(filelocation)

@@ -26,32 +26,35 @@ def textReaderRoute (app):
 
     @app.route('/textreader/read' , methods = ['POST'])
     def readText ():
-        if ('file' not in request.files) or (request.files['file'] and request.files['file'].filename == ''):
-            return json.dumps({ 'error': 'Please select a file', 'successful': False })
+        
+        try:
+            if ('file' not in request.files) or (request.files['file'] and request.files['file'].filename == ''):
+                return json.dumps({ 'error': 'Please select a file', 'successful': False })
 
-        file = request.files['file']
+            file = request.files['file']
 
-        if file and allowed_file(file.filename):
+            if not allowed_file(file.filename):
+                return json.dumps({ 'error': 'File type not allowed', 'successful': False })
+
             filename = secure_filename(file.filename)
             filelocation = os.path.normpath(os.path.dirname(__file__) + '/../static/uploads/' + filename)
 
-            try:
-                file.save(filelocation)
+            file.save(filelocation)
+            
+            img = cv2.cvtColor(cv2.imread(filelocation), cv2.COLOR_BGR2GRAY)
+            
+            cv2.threshold(img, 0, 255, cv2.THRESH_BINARY| cv2.THRESH_OTSU)[1]
                 
-                img = cv2.cvtColor(cv2.imread(filelocation), cv2.COLOR_BGR2GRAY)
-                
-                cv2.threshold(img, 0, 255, cv2.THRESH_BINARY| cv2.THRESH_OTSU)[1]
-                    
-                filename = "{}.jpg".format(os.getpid())
+            filename = "{}.jpg".format(os.getpid())
 
-                cv2.imwrite(filename, img)
+            cv2.imwrite(filename, img)
 
-                text = pytesseract.image_to_string(Image.open(filename))
+            text = pytesseract.image_to_string(Image.open(filename))
 
-                os.remove(filename)
+            os.remove(filename)
 
-                return json.dumps({ 'successful': True, 'text': text })
-            except Exception as e:
-                print(e);
+            return json.dumps({ 'successful': True, 'text': text })
+        except Exception as e:
+            print(e);
 
-                return json.dumps({ 'error': 'Please select a file', 'successful': False })
+            return json.dumps({ 'error': 'Could not read file', 'successful': False })
