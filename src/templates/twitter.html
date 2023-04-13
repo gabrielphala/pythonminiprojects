@@ -20,7 +20,10 @@
                 <button type="submit">Check sentiment</button>
             </form>
             {% if senti %}
-                <h4 style="margin: 3rem 0;">Twitter thinks {{perc}}%<span>{{senti}}</span> about {{topic}}</h4>
+                The sentiment about "{{topic}}" is
+                {% for labels in senti %}
+                <li>{{ labels }}%</li>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
