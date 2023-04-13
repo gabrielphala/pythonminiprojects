@@ -15,10 +15,10 @@ def twitterSentimentalRoute (app):
 
     
     twitter_api = twitter.Api(
-        consumer_key="skzTUzRzNHVS2YoUOoq1HEsOd",
-        consumer_secret="m7ZGlU2IB2b57WULWjMXlIrw2SlTQNH7wwY41sLjZT4OT5NjBg",
-        access_token_key="1612739396121272320-Z4VSu8wfbucXjBOviKOyajSyY60WtZ",
-        access_token_secret="f4inHTTQ9MmXE0ot4wgTECuqSjusIG8X6wBLTZonvO6Il"
+        consumer_key="",
+        consumer_secret="",
+        access_token_key="",
+        access_token_secret=""
     )
 
 
