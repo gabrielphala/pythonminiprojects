@@ -10,6 +10,8 @@ from .routes.numberdetector import numberDetectorRoute
 from .routes.twittersentimental import twitterSentimentalRoute
 from .routes.voices import voicesRoute
 from .routes.textreader import textReaderRoute
+from .routes.facerestore import faceRestoreRoute
+
 
 def create_app ():
     app = Flask(__name__)
@@ -24,5 +26,7 @@ def create_app ():
     twitterSentimentalRoute(app)
     voicesRoute(app)
     textReaderRoute(app)
+    faceRestoreRoute(app)
+
 
     return app;

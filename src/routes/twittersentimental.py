@@ -1,120 +1,102 @@
 from flask import render_template , request
 
-import os , csv , re
-
+import csv , sys
 import twitter
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 
-from string import punctuation
-
-from numpy import array2string
+from transformers import AutoModelForSequenceClassification
+from transformers import TFAutoModelForSequenceClassification
+from transformers import AutoTokenizer
 import numpy as np
-import tensorflow as tf
+from scipy.special import softmax
+import urllib.request
+
 
 def twitterSentimentalRoute (app):
+
+    
     twitter_api = twitter.Api(
-        consumer_key="juajwWb814cGSpEYQyI9WNz2T",
-        consumer_secret="c6kAI9ki3G1d8kKdp1T7PRcBv6ruw83YtMsuLf43dyvCGfdk96",
-        access_token_key="1612739396121272320-b7jG8KHb85eQ7EFhbxWnyVuZh0P72V",
-        access_token_secret="3yAZXuOE7MpXMrYuvZU0v1x5zTK4EjLh41hgPOSl0JNru"
+        consumer_key="",
+        consumer_secret="",
+        access_token_key="",
+        access_token_secret=""
     )
+
+
 
     @app.route('/twitter' , methods = ['GET'])
     def renderTwitter():
         return render_template("twitter.html")
         
+
     @app.route('/twitter' , methods = ['POST'])
     def postTwitter():
+
         topic = request.form["inputTopic"]
 
+        # Get 100 tweets from twitter
         def build_test_set(search_keyword):
             try:
-                tweets_fetched = twitter_api.GetSearch(search_keyword, count=100)
+                tweets_fetched = twitter_api.GetSearch(search_keyword, count = 10)
 
-                return [{"text": status.text, "label": None} for status in tweets_fetched]
+                tws = ""
+                for status in tweets_fetched:
+                    tws += status.text
+                    
+                return tws
             except:
                 return None
 
+
+        # Clean the text
+        def preprocess(text):
+            new_text = []
+            for t in text.split(" "):
+                t = '@user' if t.startswith('@') and len(t) > 1 else t
+                t = 'http' if t.startswith('http') else t
+                new_text.append(t)
+            return " ".join(new_text)
+
+
         test_data_set = build_test_set(topic)
+        
+        if  len(test_data_set) > 1300:
+            test_data_set = test_data_set[:1300]
 
-        training_data_set = []
-        with open(os.path.normpath(os.path.dirname(__file__) + '/../static/data/tweetDataFile.csv'), 'rt',  encoding='utf-8') as csvfile:
-            lineReader = csv.reader(csvfile, delimiter=',', quotechar="\"")
-            for row in lineReader:
-                training_data_set.append({"tweet_id": row[0], "text": row[1], "label": row[2], "topic": row[3]})
 
-        #preprocessing
-        class PreprocessTweets:
-            def __init__(self):
-                self._stopwords = set(stopwords.words('english') + list(punctuation) + ['AT_USER', 'URL'])
+        task='emotion'
+        MODEL = f"cardiffnlp/twitter-roberta-base-{task}"
 
-            def process_tweets(self, list_of_tweets):
-                processed_tweets = []
-                for tweet in list_of_tweets:
-                    if tweet["label"] is not None:
-                        if tweet["label"] == "positive" or tweet["label"] == "negative":
-                            processed_tweets.append((self._process_tweet(tweet["text"]), tweet["label"]))
-                    else:
-                        processed_tweets.append((self._process_tweet(tweet["text"]), None))
+        tokenizer = AutoTokenizer.from_pretrained(MODEL)
 
-                return processed_tweets
+        # download label mapping
+        mapping_link = f"https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/{task}/mapping.txt"
+        with urllib.request.urlopen(mapping_link) as f:
+            html = f.read().decode('utf-8').split("\n")
+            csvreader = csv.reader(html, delimiter='\t')
+        labels = [row[1] for row in csvreader if len(row) > 1]
 
-            def _process_tweet(self, tweet):
-                tweet = tweet.lower()  # convert text to lower-case
-                tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet)  # remove URLs
-                tweet = re.sub('@[^\s]+', 'AT_USER', tweet)  # remove usernames
-                tweet = re.sub(r'#([^\s]+)', r'\1', tweet)  # remove the # in #hashtag
-                tweet = word_tokenize(tweet)  # remove repeated characters (helloooooooo into hello)
 
-                words = []
-                for word in tweet:
-                    if word not in self._stopwords:
-                        words.append(word)
-                return words
+        model = AutoModelForSequenceClassification.from_pretrained(MODEL)
 
-        tweet_processor = PreprocessTweets()
-        preprocessed_training_set = tweet_processor.process_tweets(training_data_set)
-        preprocessed_test_set = tweet_processor.process_tweets(test_data_set)
+        text =  test_data_set
+        text = preprocess(text)
+        encoded_input = tokenizer(text, return_tensors='pt')
+        output = model(**encoded_input)
+        scores = output[0][0].detach().numpy()
+        scores = softmax(scores)
 
-        def build_vocabulary(preprocessed_training_data):
-            all_words = []
+        ranking = np.argsort(scores)
+        ranking = ranking[::-1]
+        
+        outcome = []
 
-            for (words, sentiment) in preprocessed_training_data:
-                all_words.extend(words)
+        for i in range(scores.shape[0]):
+            l = labels[ranking[i]]
+            s = scores[ranking[i]]
+            outcome.append( str(i+1) + " " + l + " " + str(np.round(float(s * 100), 4)) )
+               
+        
+        print('=======================================I did something i think=========================', file=sys.stderr)
+        print( outcome , file=sys.stderr)
 
-            wordlist = nltk.FreqDist(all_words)
-            word_features = wordlist.keys()
-
-            return word_features
-
-        training_data_features = build_vocabulary(preprocessed_training_set)
-
-        def extract_features(tweet):
-            tweet_words = set(tweet)
-            features = {}
-            for word in training_data_features:
-                is_feature_in_words = word in tweet_words
-                features[word] = is_feature_in_words
-            return features
-
-        training_features = nltk.classify.apply_features(extract_features, preprocessed_training_set)
-
-        NBayesClassifier = nltk.NaiveBayesClassifier.train(training_features)
-
-        label = NBayesClassifier.classify(extract_features("I am happy"))
-
-        classified_result_labels = []
-        for tweet in preprocessed_test_set:
-            classified_result_labels.append(NBayesClassifier.classify(extract_features(tweet[0])))
-
-        if classified_result_labels.count('positive') > classified_result_labels.count('negative'):
-            perc = 100 * classified_result_labels.count('positive') / len(classified_result_labels)
-            return render_template("twitter.html", senti = "positively" ,  perc = perc , topic =topic)
-
-        else:
-            perc = 100 * classified_result_labels.count('positive') / len(classified_result_labels)
-            return render_template("twitter.html", senti = "negatively" ,  perc = perc , topic =topic)
-
-        return render_template("twitter.html")
+        return render_template("twitter.html", senti =  outcome , topic = topic)
